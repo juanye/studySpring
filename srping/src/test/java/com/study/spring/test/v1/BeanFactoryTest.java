@@ -22,7 +22,7 @@ public class BeanFactoryTest {
 		//解析xml配置文件
 		BeanDefinition beanDefinition = beanFactory.getBeanDefinition("petStore");
 		
-		//根据class,判断获取到的类是否是配置的类
+		//根据className,判断获取到的类是否是xml中配置的类
 		assertEquals("com.study.spring.service.v1.PetStoreService", 
 				beanDefinition.getBeanClassName());
 		

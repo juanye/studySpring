@@ -74,7 +74,7 @@ public class DefaultBeanFactory implements BeanFactory {
 //			return null;
 			throw new BeanCreationException("Bean Definition does not exist");
 		}
-		//lassLoader的具体作用就是将class文件加载到jvm虚拟机中去，程序就可以运行了。
+		//classLoader的具体作用就是将class文件加载到jvm虚拟机中去，程序就可以运行了。
 		ClassLoader cl = ClassUtils.getDefaultClassLoader();
 		String beanClassName = bd.getBeanClassName();
 		try {
