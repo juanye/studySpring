@@ -8,7 +8,8 @@ import com.study.spring.beans.factory.BeanCreationException;
 import com.study.spring.beans.factory.config.ConfigurableBeanFactory;
 import com.study.spring.util.ClassUtils;
 
-public class DefaultBeanFactory implements ConfigurableBeanFactory,BeanDefinitionRegistry {
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
+	implements ConfigurableBeanFactory,BeanDefinitionRegistry {
 
 	private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>(64);
 	
@@ -25,16 +26,27 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory,BeanDefinitio
 		if(bd == null){
 			throw new BeanCreationException("Bean Definition does not exist");
 		}
-		//classLoader的具体作用就是将class文件加载到jvm虚拟机中去，程序就可以运行了。
-//		ClassLoader cl = ClassUtils.getDefaultClassLoader();
+		
+		if (bd.isSingleton()) {
+			Object bean = this.getSingleton(beanID);
+			if (bean == null) {
+				bean = createBean(bd);
+				this.registerSingleton(beanID, bean);
+			}
+			return bean;
+		}
+		return createBean(bd);
+	}
+	
+	private Object createBean(BeanDefinition bd) {
 		ClassLoader cl = this.getBeanClassLoader();
 		String beanClassName = bd.getBeanClassName();
 		try {
 			Class<?> clz = cl.loadClass(beanClassName);
 			return clz.newInstance();
-		}catch (Exception e) {
+		} catch (Exception e) {			
 			throw new BeanCreationException("create bean for "+ beanClassName +" failed",e);
-		}
+		}	
 	}
 
 	@Override

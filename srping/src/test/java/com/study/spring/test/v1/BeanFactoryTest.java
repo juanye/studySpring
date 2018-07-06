@@ -1,7 +1,9 @@
 package com.study.spring.test.v1;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,6 +44,15 @@ public class BeanFactoryTest {
 //		reader.loadBeanDefinitions("petStore-v1.xml");
 		reader.loadBeanDefinitions(new ClassPathResource("petstore-v1.xml"));
 		BeanDefinition beanDefinition = beanFactory.getBeanDefinition("petStore");
+		
+		//判断是否为scope单例模式
+		assertTrue(beanDefinition.isSingleton());
+		
+		assertFalse(beanDefinition.isPrototype());
+		
+		assertEquals(BeanDefinition.SCOPE_DEFAULT,beanDefinition.getScope());
+		
+		
 		//根据className,判断获取到的类是否是xml中配置的类
 		assertEquals("com.study.spring.service.v1.PetStoreService", 
 				beanDefinition.getBeanClassName());
@@ -49,6 +60,11 @@ public class BeanFactoryTest {
 		PetStoreService petStoreService = (PetStoreService)beanFactory.getBean("petStore");
 		
 		assertNotNull(petStoreService);
+		
+		//校验是否同一对象
+		PetStoreService petStore1 = (PetStoreService)beanFactory.getBean("petStore");
+		
+		assertTrue(petStoreService.equals(petStore1));
 	}
 	
 	@Test
