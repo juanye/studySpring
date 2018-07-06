@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.study.spring.beans.BeanDefinition;
+import com.study.spring.beans.core.io.ClassPathResource;
 import com.study.spring.beans.factory.BeanCreationException;
 import com.study.spring.beans.factory.BeanDefinitionStoreException;
 import com.study.spring.beans.factory.support.DefaultBeanFactory;
@@ -38,7 +39,8 @@ public class BeanFactoryTest {
 
 	@Test
 	public void testGetBean() {
-		reader.loadBeanDefinitions("petStore-v1.xml");
+//		reader.loadBeanDefinitions("petStore-v1.xml");
+		reader.loadBeanDefinitions(new ClassPathResource("petstore-v1.xml"));
 		BeanDefinition beanDefinition = beanFactory.getBeanDefinition("petStore");
 		//根据className,判断获取到的类是否是xml中配置的类
 		assertEquals("com.study.spring.service.v1.PetStoreService", 
@@ -51,7 +53,8 @@ public class BeanFactoryTest {
 	
 	@Test
 	public void testInvalidBean() {
-		reader.loadBeanDefinitions("petStore-v1.xml");
+//		reader.loadBeanDefinitions("petStore-v1.xml");
+		reader.loadBeanDefinitions(new ClassPathResource("petstore-v1.xml"));
 		try {
 			beanFactory.getBean("invalidBean");
 		}catch (BeanCreationException e) {
@@ -64,7 +67,8 @@ public class BeanFactoryTest {
 	@Test
 	public void testInvalidXml() {
 		try {
-			reader.loadBeanDefinitions("xxx.xml");
+//			reader.loadBeanDefinitions("xxx.xml");
+			reader.loadBeanDefinitions(new ClassPathResource("xxx.xml"));
 		}catch (BeanDefinitionStoreException e) {
 			return;
 		}
