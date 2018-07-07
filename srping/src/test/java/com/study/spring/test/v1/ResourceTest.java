@@ -29,7 +29,8 @@ public class ResourceTest {
 	@Test
 	public void testFileSystemResource() throws IOException {
 		InputStream inputStream = null;
-		Resource resource = new FileSystemResource("D:\\GitHub\\study\\studySpring\\srping\\src\\test\\resources\\petStore-v1.xml");
+		//修改为相对路径
+		Resource resource = new FileSystemResource("src\\test\\resources\\petStore-v1.xml");
 		
 		try {
 			inputStream = resource.getInputStream();

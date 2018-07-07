@@ -8,7 +8,7 @@ import com.study.spring.util.ClassUtils;
 
 /**
  * 因为FileSystemXmlApplicationContext和ClassPathXmlApplicationContext中有相似方法，仅部份内容不同，
- * 故而抽象中相同部份，再分别继承抽象类实现其中不同部份。（模板方法）
+ * 故而抽象出相同部份，再分别继承抽象类实现其中不同部份。（模板方法）
  * @author chenjuan
  *
  */

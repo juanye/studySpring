@@ -20,8 +20,8 @@ public class ApplicationContextTest {
 	
 	 @Test 
 	public void testGetBeanFromFileSystemContext(){
-	    //注意，这里仍然是硬编码本地路径，这是不好的实践! 
-		ApplicationContext ctx = new FileSystemXmlApplicationContext("D:\\GitHub\\study\\studySpring\\srping\\src\\test\\resources\\petStore-v1.xml");
+	    //修改为相对路径
+		ApplicationContext ctx = new FileSystemXmlApplicationContext("src\\test\\resources\\petStore-v1.xml");
 		PetStoreService petStore = (PetStoreService)ctx.getBean("petStore");
 		Assert.assertNotNull(petStore);
 		
